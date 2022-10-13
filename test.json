@@ -1,0 +1,46 @@
+{
+    "data":{
+        "url": "https://raw.githubusercontent.com/YangZhen11/A2/main/world-happiness-report.csv"
+    },
+    "title":{
+        "text":"World happiness for each Region"
+    },
+    "width": 600,
+    "height": 400,
+    "resolve": {"scale": {"color": "independent"}},
+    
+    "mark":"bar",
+    "params": [
+        {
+            "name": "Region",
+            "select":{"type": "point", "fields": ["Region"]},
+            "bind": "legend"
+        }
+    ],
+    "transform": [
+        {
+            "filter":"datum['Ladder_score'] > 0"
+        }
+    ],
+    "encoding": {
+        "x":{
+            "aggregate":"sum",
+            "field": "Ladder_score",
+            "type": "quantitative"
+        },
+        "y":{
+            "field":"Region",
+            "type": "nominal"
+        },
+        "color":{"field":"Region"},
+        "opacity": {"condition": {"param": "Region", "value": 1}, "value": 0.2},
+        "tooltip": [
+            {"field": "Region", "type": "nominal"},
+            {
+                "aggregate": "sum",
+                "field": "Ladder_score",
+                "type": "quantitative"
+            }
+        ]
+    }
+}

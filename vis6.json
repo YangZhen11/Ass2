@@ -1,0 +1,75 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data":{
+        "url": "https://raw.githubusercontent.com/YangZhen11/A2/main/world-happiness-report.csv"
+    },
+    "title":{
+        "text":"World happiness for each Region"
+    },
+    "width": 800,
+    "height": 450,
+    "resolve": {"scale": {"color": "independent"}},
+    "mark":"bar",
+    "params": [
+        {
+            "name": "Region",
+            "select":{"type": "point", "fields": ["Region"]},
+            "bind": "legend"
+        }
+    ],
+    "transform": [
+        {
+            "filter":"datum['Ladder_score'] > 0"
+        }
+    ],
+    "encoding": {
+        "x":{
+            "aggregate":"average",
+            "field": "Ladder_score",
+            "type": "quantitative"
+        },
+        "y":{
+            "field":"Region",
+            "type": "nominal"
+        },
+        "color":{
+            "field": "Region",
+            "type": "nominal",
+            "scale": {
+                "domain": [
+                    "Western Europe",
+                    "North America and ANZ",
+                    "Middle East and North Africa",
+                    "Latin America and Caribbean",
+                    "Central and Eastern Europe",
+                    "East Asia",
+                    "Southeast Asia",
+                    "Sub-Saharan Africa",
+                    "Commonwealth of Independent States",
+                    "South Asia"
+                ],
+                "range": [
+                    "#e41a1c",
+                    "#984ea3",
+                    "#ff7f00",
+                    "#a6cee3",
+                    "#377eb8",
+                    "#a65628",
+                    "#4b4c4e",
+                    "#002050",
+                    "#ef008c",
+                    "#ecc846"
+                ]
+            } 
+        },
+        "opacity": {"condition": {"param": "Region", "value": 1}, "value": 0.2},
+        "tooltip": [
+            {"field": "Region", "type": "nominal"},
+            {
+                "aggregate": "average",
+                "field": "Ladder_score",
+                "type": "quantitative"
+            }
+        ]
+    }
+}
